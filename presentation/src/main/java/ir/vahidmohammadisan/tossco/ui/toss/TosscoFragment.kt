@@ -16,6 +16,7 @@ import ir.vahidmohammadisan.tossco.databinding.TossFragmentBinding
 import ir.vahidmohammadisan.tossco.ui.wallet.WalletViewModel
 import timber.log.Timber
 
+
 @AndroidEntryPoint
 class TosscoFragment : Fragment() {
 
@@ -31,7 +32,6 @@ class TosscoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = TossFragmentBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
@@ -110,15 +110,18 @@ class TosscoFragment : Fragment() {
             }
         })
 
-        tosscoViewModel.animationStateLiveData.observe(viewLifecycleOwner, Observer {
-            if (it)
-                binding.animationView.playAnimation()
-        })
-
         binding.animationView.setOnClickListener {
             if (findNavController().currentDestination?.id == R.id.tosscoFragment)
                 findNavController().navigate(R.id.action_tosscoFragment_to_guessDialogFragment)
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        tosscoViewModel.animationStateLiveData.observe(viewLifecycleOwner, Observer {
+            if (it)
+                binding.animationView.playAnimation()
+        })
     }
 }

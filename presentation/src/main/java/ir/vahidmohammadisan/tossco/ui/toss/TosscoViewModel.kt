@@ -73,7 +73,7 @@ class TosscoViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun animation(state: Boolean) {
+    fun changeAnimationState(state: Boolean) {
         animationStateLiveData.value = state
     }
 

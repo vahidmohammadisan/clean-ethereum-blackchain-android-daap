@@ -1,12 +1,15 @@
 package ir.vahidmohammadisan.tossco.ui.toss
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
+import ir.vahidmohammadisan.tossco.R
 import ir.vahidmohammadisan.tossco.databinding.GuessDialogFragmentBinding
 
 @AndroidEntryPoint
@@ -30,15 +33,25 @@ class GuessDialogFragment : BottomSheetDialogFragment() {
 
         binding.trueButton.setOnClickListener {
             tosscoViewModel.takeGuess(true)
-            tosscoViewModel.animation(true)
-            dismiss()
+            handleUI()
         }
 
         binding.falseButton.setOnClickListener {
-            tosscoViewModel.takeGuess(true)
-            tosscoViewModel.animation(true)
-            dismiss()
+            tosscoViewModel.takeGuess(false)
+            handleUI()
         }
 
+    }
+
+    private fun handleUI() {
+        tosscoViewModel.changeAnimationState(true)
+        if (findNavController().currentDestination?.id == R.id.guessDialogFragment)
+            findNavController().navigate(R.id.tosscoFragment)
+        dismiss()
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        onResume()
     }
 }

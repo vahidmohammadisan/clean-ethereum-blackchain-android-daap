@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tossco"
+    app:startDestination="@id/walletFragment">
+
+    <fragment
+        android:id="@+id/tosscoFragment"
+        android:name="ir.vahidmohammadisan.tossco.ui.toss.TosscoFragment"
+        android:label="toss_fragment"
+        tools:layout="@layout/toss_fragment" >
+        <action
+            android:id="@+id/action_tosscoFragment_to_guessDialogFragment"
+            app:destination="@id/guessDialogFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletFragment"
+        android:name="ir.vahidmohammadisan.tossco.ui.wallet.WalletFragment"
+        android:label="WalletFragment"
+        tools:layout="@layout/wallet_fragment">
+        <action
+            android:id="@+id/action_walletFragment_to_tosscoFragment"
+            app:destination="@id/tosscoFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/walletFragment"/>
+    </fragment>
+    <dialog
+        android:id="@+id/guessDialogFragment"
+        android:name="ir.vahidmohammadisan.tossco.ui.toss.GuessDialogFragment"
+        android:label="guess_dialog_fragment"
+        tools:layout="@layout/guess_dialog_fragment" />
+
+</navigation>

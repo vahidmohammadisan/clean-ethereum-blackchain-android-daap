@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TossCo</string>
+    <string name="tossco">tossco</string>
+    <string name="wallet">wallet</string>
+    <string name="test_net">test net</string>
+    <string name="main_net">main net</string>
+</resources>

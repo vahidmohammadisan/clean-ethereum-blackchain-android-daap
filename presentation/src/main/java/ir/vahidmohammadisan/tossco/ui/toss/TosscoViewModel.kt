@@ -23,8 +23,6 @@ class TosscoViewModel @Inject constructor(
     val loadContractLiveData = MutableLiveData<Resource<Boolean>>()
     val takeGuessLiveData = MutableLiveData<Resource<Boolean>>()
 
-    val animationStateLiveData = MutableLiveData<Boolean>()
-
     fun getWalletBalance(address: String) {
         getWalletBalanceUseCase.execute(address).onEach {
             when (it) {
@@ -71,10 +69,6 @@ class TosscoViewModel @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
-    }
-
-    fun changeAnimationState(state: Boolean) {
-        animationStateLiveData.value = state
     }
 
 }

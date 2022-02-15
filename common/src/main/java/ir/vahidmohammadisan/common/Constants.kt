@@ -6,3 +6,4 @@ const val InfuraToken = "99f8a9eca264413a8b19caec52c6f78f"
 
 const val GasLimit = 20_000_000_000L
 const val GasPrice = 4300000
+const val ANIMATION = "ANIMATION"

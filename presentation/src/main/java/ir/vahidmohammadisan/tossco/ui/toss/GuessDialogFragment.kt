@@ -1,6 +1,5 @@
 package ir.vahidmohammadisan.tossco.ui.toss
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
+import ir.vahidmohammadisan.common.ANIMATION
 import ir.vahidmohammadisan.tossco.R
 import ir.vahidmohammadisan.tossco.databinding.GuessDialogFragmentBinding
 
@@ -16,8 +16,7 @@ import ir.vahidmohammadisan.tossco.databinding.GuessDialogFragmentBinding
 class GuessDialogFragment : BottomSheetDialogFragment() {
 
     lateinit var binding: GuessDialogFragmentBinding
-
-    private val tosscoViewModel by viewModels<TosscoViewModel>()
+    private var GUESS = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,26 +31,21 @@ class GuessDialogFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.trueButton.setOnClickListener {
-            tosscoViewModel.takeGuess(true)
+            GUESS = true
             handleUI()
         }
 
         binding.falseButton.setOnClickListener {
-            tosscoViewModel.takeGuess(false)
+            GUESS = false
             handleUI()
         }
 
     }
 
     private fun handleUI() {
-        tosscoViewModel.changeAnimationState(true)
-        if (findNavController().currentDestination?.id == R.id.guessDialogFragment)
-            findNavController().navigate(R.id.tosscoFragment)
+        if (findNavController().currentDestination?.id == R.id.guessDialogFragment) {
+            findNavController().previousBackStackEntry?.savedStateHandle?.set(ANIMATION, GUESS)
+        }
         dismiss()
-    }
-
-    override fun onDismiss(dialog: DialogInterface) {
-        super.onDismiss(dialog)
-        onResume()
     }
 }

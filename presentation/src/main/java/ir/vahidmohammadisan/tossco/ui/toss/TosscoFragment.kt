@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import ir.vahidmohammadisan.common.ANIMATION
 import ir.vahidmohammadisan.common.vo.Resource
 import ir.vahidmohammadisan.tossco.R
 import ir.vahidmohammadisan.tossco.databinding.TossFragmentBinding
@@ -115,13 +116,12 @@ class TosscoFragment : Fragment() {
                 findNavController().navigate(R.id.action_tosscoFragment_to_guessDialogFragment)
         }
 
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(ANIMATION)
+            ?.observe(viewLifecycleOwner) {
+                binding.animationView.playAnimation()
+                tosscoViewModel.takeGuess(it)
+            }
+
     }
 
-    override fun onResume() {
-        super.onResume()
-        tosscoViewModel.animationStateLiveData.observe(viewLifecycleOwner, Observer {
-            if (it)
-                binding.animationView.playAnimation()
-        })
-    }
 }

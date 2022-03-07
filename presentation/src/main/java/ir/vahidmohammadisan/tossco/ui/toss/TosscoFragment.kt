@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ir.vahidmohammadisan.common.ANIMATION
 import ir.vahidmohammadisan.common.vo.Resource
+import ir.vahidmohammadisan.domain.model.Wallet
 import ir.vahidmohammadisan.tossco.R
 import ir.vahidmohammadisan.tossco.databinding.TossFragmentBinding
 import ir.vahidmohammadisan.tossco.ui.wallet.WalletViewModel
@@ -27,6 +28,7 @@ class TosscoFragment : Fragment() {
     private val walletViewModel by viewModels<WalletViewModel>()
 
     private lateinit var address: String
+    private lateinit var selectedWallet: Wallet
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,8 +53,9 @@ class TosscoFragment : Fragment() {
                 is Resource.Success -> {
                     it.data?.let { Items ->
                         address = Items[0].address
-                        tosscoViewModel.loadContract(privateKey = Items[0].privateKey)
+                        selectedWallet = Items[0]
                     }
+                    tosscoViewModel.loadContract(privateKey = selectedWallet.privateKey)
                 }
             }
         }

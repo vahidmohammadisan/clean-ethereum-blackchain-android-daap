@@ -67,6 +67,7 @@ class WalletFragment : Fragment() {
                         Timber.tag("address ${it.data?.address}")
                         Log.w("address,", it.data?.address.toString())
                         it.data?.let { Credentials ->
+                            Log.w("Address",it.data?.address.toString())
                             Timber.tag("private key ${Credentials.ecKeyPair.privateKey}")
                             Timber.tag("public key ${Credentials.ecKeyPair.publicKey}")
                             saveWallet(
@@ -80,6 +81,7 @@ class WalletFragment : Fragment() {
         }
 
         binding.importWalletBtn.setOnClickListener {
+            //galaxy valid wire answer subject bunker win east apology drive inquiry loan
             viewModel.importWallet("")
             viewModel.importWalletLiveData.observe(viewLifecycleOwner) {
                 when (it) {

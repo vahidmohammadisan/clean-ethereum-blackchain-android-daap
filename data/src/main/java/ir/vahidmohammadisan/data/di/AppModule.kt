@@ -8,7 +8,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ir.vahidmohammadisan.data.local.AppDatabase
+import ir.vahidmohammadisan.data.local.SharedPreferencesManager
 import javax.inject.Singleton
+
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -21,6 +23,12 @@ abstract class AppModule {
         ) = Room.databaseBuilder(context, AppDatabase::class.java, "database")
             .fallbackToDestructiveMigration()
             .allowMainThreadQueries()
+            /*.openHelperFactory(SupportFactory(SQLiteDatabase.getBytes("PassPhrase".toCharArray())))*/
             .build()
+
+        @Provides
+        @Singleton
+        fun provideSharedPreferencesManager(@ApplicationContext context: Context): SharedPreferencesManager =
+            SharedPreferencesManager(context)
     }
 }

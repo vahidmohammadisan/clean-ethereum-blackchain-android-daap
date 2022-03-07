@@ -3,6 +3,7 @@ package ir.vahidmohammadisan.data.repository
 import android.util.Log
 import ir.vahidmohammadisan.common.vo.Resource
 import ir.vahidmohammadisan.data.contract.TossCo
+import ir.vahidmohammadisan.data.local.SharedPreferencesManager
 import ir.vahidmohammadisan.data.local.WalletDao
 import ir.vahidmohammadisan.data.model.WalletEntity
 import ir.vahidmohammadisan.data.model.toWallet
@@ -23,6 +24,7 @@ import java.security.SecureRandom
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
+    private val sharedPreferences: SharedPreferencesManager,
     private val walletDao: WalletDao,
     private val tossCo: TossCo
 ) : Repository {
@@ -144,11 +146,14 @@ class RepositoryImpl @Inject constructor(
 
     override fun takeGuess(guess: Boolean): Flow<Resource<Boolean>> = channelFlow {
         send(Resource.Loading<Boolean>())
-
+        /*  sharedPreferences.getSecureShared().edit().apply() {
+              putString("vahid", "anita")
+          }.apply()
+          Log.w("BBBB", sharedPreferences.getSecureShared().getString("vahid", "_anita_").toString())*/
         try {
 
             launch(Dispatchers.Default) {
-                Log.w("random:",(0..99).random().toString())
+                Log.w("random:", (0..99).random().toString())
                 val result: Boolean = tossCo.guess((0..99999).random().toBigInteger(), guess).send()
                 withContext(Dispatchers.Main) {
                     send(Resource.Success<Boolean>(data = result))

@@ -1,5 +1,6 @@
 package ir.vahidmohammadisan.data.di
 
+import android.util.Log
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -9,6 +10,7 @@ import ir.vahidmohammadisan.common.GasLimit
 import ir.vahidmohammadisan.common.GasPrice
 import ir.vahidmohammadisan.common.InfuraToken
 import ir.vahidmohammadisan.data.contract.TossCo
+import ir.vahidmohammadisan.data.local.SharedPreferencesManager
 import org.web3j.crypto.Credentials
 import org.web3j.protocol.Web3j
 import org.web3j.protocol.infura.InfuraHttpService
@@ -24,9 +26,13 @@ object Web3Module {
     }
 
     @Provides
-    fun provideTossCo(): TossCo {
+    fun provideTossCo(sharedPreferencesManager: SharedPreferencesManager): TossCo {
         val gasLimit: BigInteger = BigInteger.valueOf(GasLimit.toLong())
         val gasPrice: BigInteger = BigInteger.valueOf(GasPrice.toLong())
+
+        Log.w("BBBB", sharedPreferencesManager.getSecureShared().getString("vahid", "").toString())
+
+
         val credentials =
             Credentials.create("105642515519938468974083437117095497201223008449694724482742142839756054013536")
 

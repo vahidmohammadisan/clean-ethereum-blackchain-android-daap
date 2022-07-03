@@ -12,4 +12,5 @@ interface Repository {
     fun getWalletBalance(address: String): Flow<Resource<String>>
     fun loadContract(privateKey: String): Flow<Resource<Boolean>>
     fun takeGuess(guess: Boolean): Flow<Resource<Boolean>>
+    fun saveResult(): Flow<Int>
 }

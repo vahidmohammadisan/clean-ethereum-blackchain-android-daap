@@ -1,6 +1,7 @@
 package ir.vahidmohammadisan.data.repository
 
 import android.util.Log
+import ir.vahidmohammadisan.common.CORRECT_TIME
 import ir.vahidmohammadisan.common.vo.Resource
 import ir.vahidmohammadisan.data.contract.TossCo
 import ir.vahidmohammadisan.data.local.SharedPreferencesManager
@@ -163,6 +164,17 @@ class RepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             send(Resource.Error<Boolean>(e.localizedMessage ?: "unknown error"))
         }
+    }
+
+    override fun saveResult(): Flow<Int> = channelFlow {
+        sharedPreferences.getSecureShared().edit().apply() {
+            putInt(
+                CORRECT_TIME,
+                sharedPreferences.getSecureShared().getInt(CORRECT_TIME, 0) + 1
+            )
+        }.apply()
+
+        send(sharedPreferences.getSecureShared().getInt(CORRECT_TIME, 0))
     }
 
     private fun keyGeneration(master: Bip32ECKeyPair): Bip32ECKeyPair {

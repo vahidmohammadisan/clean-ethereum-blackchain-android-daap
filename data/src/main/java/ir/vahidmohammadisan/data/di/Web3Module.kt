@@ -30,9 +30,6 @@ object Web3Module {
         val gasLimit: BigInteger = BigInteger.valueOf(GasLimit.toLong())
         val gasPrice: BigInteger = BigInteger.valueOf(GasPrice.toLong())
 
-        Log.w("BBBB", sharedPreferencesManager.getSecureShared().getString("vahid", "").toString())
-
-
         val credentials =
             Credentials.create("105642515519938468974083437117095497201223008449694724482742142839756054013536")
 

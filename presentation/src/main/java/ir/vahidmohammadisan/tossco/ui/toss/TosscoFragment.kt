@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -107,12 +108,21 @@ class TosscoFragment : Fragment() {
                 }
                 is Resource.Success -> {
                     it.data?.let { it ->
+                        if (it)
+                            tosscoViewModel.saveResults()
                         Log.w("take guess Result", it.toString())
                         Timber.tag("take guess Result $it")
                     }
                 }
             }
         })
+
+        tosscoViewModel.saveResultLiveData.observe(viewLifecycleOwner) {
+            if (it == 10) {
+                Toast.makeText(context!!, "win", Toast.LENGTH_LONG).show()
+
+            }
+        }
 
         binding.animationView.setOnClickListener {
             if (findNavController().currentDestination?.id == R.id.tosscoFragment)

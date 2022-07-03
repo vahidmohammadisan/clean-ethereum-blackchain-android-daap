@@ -7,6 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.vahidmohammadisan.common.vo.Resource
 import ir.vahidmohammadisan.domain.usecase.GetWalletBalanceUseCase
 import ir.vahidmohammadisan.domain.usecase.LoadContractUseCase
+import ir.vahidmohammadisan.domain.usecase.SaveResultUseCase
 import ir.vahidmohammadisan.domain.usecase.takeGuessUseCase
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -16,12 +17,14 @@ import javax.inject.Inject
 class TosscoViewModel @Inject constructor(
     private val getWalletBalanceUseCase: GetWalletBalanceUseCase,
     private val loadContractUseCase: LoadContractUseCase,
-    private val takeGuessUseCase: takeGuessUseCase
+    private val takeGuessUseCase: takeGuessUseCase,
+    private val saveResultUseCase: SaveResultUseCase,
 ) : ViewModel() {
 
     val walletBalanceLiveData = MutableLiveData<Resource<String>>()
     val loadContractLiveData = MutableLiveData<Resource<Boolean>>()
     val takeGuessLiveData = MutableLiveData<Resource<Boolean>>()
+    val saveResultLiveData = MutableLiveData<Int>()
 
     fun getWalletBalance(address: String) {
         getWalletBalanceUseCase.execute(address).onEach {
@@ -68,6 +71,12 @@ class TosscoViewModel @Inject constructor(
                     takeGuessLiveData.value = Resource.Success(it.data!!)
                 }
             }
+        }.launchIn(viewModelScope)
+    }
+
+    fun saveResults() {
+        saveResultUseCase.execute(Unit).onEach {
+            saveResultLiveData.postValue(it)
         }.launchIn(viewModelScope)
     }
 

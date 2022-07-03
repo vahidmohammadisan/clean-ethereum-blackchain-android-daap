@@ -9,4 +9,5 @@ const val TCO_OWNER_ADDRESS = "0x0AdAcFEA5d787b85fA374608D9Cdd11D162AfAAE"
 
 const val GasLimit = 20_000_000_000L
 const val GasPrice = 4300000
+const val CORRECT_TIME = "CORRECT_TIME"
 const val ANIMATION = "ANIMATION"

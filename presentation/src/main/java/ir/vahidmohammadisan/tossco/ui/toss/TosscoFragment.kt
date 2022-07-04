@@ -1,11 +1,11 @@
 package ir.vahidmohammadisan.tossco.ui.toss
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -43,6 +43,7 @@ class TosscoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         walletViewModel.getWallet()
+        tosscoViewModel.getCorrectGuess()
         walletViewModel.getWalletLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {
@@ -109,7 +110,7 @@ class TosscoFragment : Fragment() {
                 is Resource.Success -> {
                     it.data?.let { it ->
                         if (it)
-                            tosscoViewModel.saveResults()
+                            tosscoViewModel.saveCorrectGuess()
                         Log.w("take guess Result", it.toString())
                         Timber.tag("take guess Result $it")
                     }
@@ -117,11 +118,28 @@ class TosscoFragment : Fragment() {
             }
         })
 
-        tosscoViewModel.saveResultLiveData.observe(viewLifecycleOwner) {
-            if (it == 10) {
-                Toast.makeText(context!!, "win", Toast.LENGTH_LONG).show()
+        tosscoViewModel.saveCorrectGuessLiveData.observe(viewLifecycleOwner) {
+            binding.correctGuess.text = it.toString()
 
+            if (it == 10) {
+                binding.paper.visibility = View.VISIBLE
+                binding.animationView.visibility = View.GONE
+                binding.wallet.visibility = View.VISIBLE
+                Handler().postDelayed({
+                    tosscoViewModel.resetCorrectGuess()
+                }, 10000)
             }
+        }
+
+        tosscoViewModel.getCorrectGuessLiveData.observe(viewLifecycleOwner) {
+            binding.correctGuess.text = it.toString()
+        }
+
+        tosscoViewModel.resetGuessLiveData.observe(viewLifecycleOwner) {
+            binding.paper.visibility = View.GONE
+            binding.animationView.visibility = View.VISIBLE
+            binding.wallet.visibility = View.GONE
+            binding.correctGuess.text = "0"
         }
 
         binding.animationView.setOnClickListener {

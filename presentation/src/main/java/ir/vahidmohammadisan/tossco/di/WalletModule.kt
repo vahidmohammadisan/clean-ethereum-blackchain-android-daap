@@ -9,7 +9,6 @@ import ir.vahidmohammadisan.common.vo.Resource
 import ir.vahidmohammadisan.domain.model.Wallet
 import ir.vahidmohammadisan.domain.usecase.*
 import kotlinx.coroutines.flow.Flow
-import org.web3j.abi.datatypes.Uint
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -59,8 +58,20 @@ abstract class WalletModule {
 
     @Binds
     @ViewModelScoped
-    abstract fun bindSaveResultUseCase(
-        saveResultUseCase: SaveResultUseCase
+    abstract fun bindSaveCorrectGuessUseCase(
+        saveCorrectGuessUseCase: SaveCorrectGuessUseCase
+    ): UseCase<Unit, Flow<Int>>
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindGetCorrectGuessUseCase(
+        getCorrectGuessUseCase: GetCorrectGuessUseCase
+    ): UseCase<Unit, Flow<Int>>
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindResetGuessUseCase(
+        resetGuessUseCase: ResetGuessUseCase
     ): UseCase<Unit, Flow<Int>>
 
 }

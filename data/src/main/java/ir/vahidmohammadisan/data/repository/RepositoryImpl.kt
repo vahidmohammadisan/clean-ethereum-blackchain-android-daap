@@ -166,7 +166,7 @@ class RepositoryImpl @Inject constructor(
         }
     }
 
-    override fun saveResult(): Flow<Int> = channelFlow {
+    override fun saveCorrectGuess(): Flow<Int> = channelFlow {
         sharedPreferences.getSecureShared().edit().apply() {
             putInt(
                 CORRECT_TIME,
@@ -174,6 +174,20 @@ class RepositoryImpl @Inject constructor(
             )
         }.apply()
 
+        send(sharedPreferences.getSecureShared().getInt(CORRECT_TIME, 0))
+    }
+
+    override fun getCorrectGuess(): Flow<Int> = channelFlow {
+        send(sharedPreferences.getSecureShared().getInt(CORRECT_TIME, 0))
+    }
+
+    override fun resetGuess(): Flow<Int> = channelFlow {
+        sharedPreferences.getSecureShared().edit().apply() {
+            putInt(
+                CORRECT_TIME,
+                0
+            )
+        }.apply()
         send(sharedPreferences.getSecureShared().getInt(CORRECT_TIME, 0))
     }
 

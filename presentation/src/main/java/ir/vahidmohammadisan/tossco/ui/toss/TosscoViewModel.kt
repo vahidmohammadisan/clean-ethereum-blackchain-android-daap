@@ -5,10 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.vahidmohammadisan.common.vo.Resource
-import ir.vahidmohammadisan.domain.usecase.GetWalletBalanceUseCase
-import ir.vahidmohammadisan.domain.usecase.LoadContractUseCase
-import ir.vahidmohammadisan.domain.usecase.SaveResultUseCase
-import ir.vahidmohammadisan.domain.usecase.takeGuessUseCase
+import ir.vahidmohammadisan.domain.usecase.*
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -18,13 +15,17 @@ class TosscoViewModel @Inject constructor(
     private val getWalletBalanceUseCase: GetWalletBalanceUseCase,
     private val loadContractUseCase: LoadContractUseCase,
     private val takeGuessUseCase: takeGuessUseCase,
-    private val saveResultUseCase: SaveResultUseCase,
+    private val saveCorrectGuessUseCase: SaveCorrectGuessUseCase,
+    private val getCorrectGuessUseCase: GetCorrectGuessUseCase,
+    private val resetGuessUseCase: ResetGuessUseCase,
 ) : ViewModel() {
 
     val walletBalanceLiveData = MutableLiveData<Resource<String>>()
     val loadContractLiveData = MutableLiveData<Resource<Boolean>>()
     val takeGuessLiveData = MutableLiveData<Resource<Boolean>>()
-    val saveResultLiveData = MutableLiveData<Int>()
+    val saveCorrectGuessLiveData = MutableLiveData<Int>()
+    val getCorrectGuessLiveData = MutableLiveData<Int>()
+    val resetGuessLiveData = MutableLiveData<Int>()
 
     fun getWalletBalance(address: String) {
         getWalletBalanceUseCase.execute(address).onEach {
@@ -74,9 +75,21 @@ class TosscoViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun saveResults() {
-        saveResultUseCase.execute(Unit).onEach {
-            saveResultLiveData.postValue(it)
+    fun saveCorrectGuess() {
+        saveCorrectGuessUseCase.execute(Unit).onEach {
+            saveCorrectGuessLiveData.postValue(it)
+        }.launchIn(viewModelScope)
+    }
+
+    fun getCorrectGuess() {
+        getCorrectGuessUseCase.execute(Unit).onEach {
+            getCorrectGuessLiveData.postValue(it)
+        }.launchIn(viewModelScope)
+    }
+
+    fun resetCorrectGuess() {
+        resetGuessUseCase.execute(Unit).onEach {
+            resetGuessLiveData.postValue(it)
         }.launchIn(viewModelScope)
     }
 

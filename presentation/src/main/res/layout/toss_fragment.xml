@@ -18,4 +18,53 @@
         app:layout_constraintVertical_bias="0.4"
         app:lottie_rawRes="@raw/flip" />
 
+    <TextView
+        android:id="@+id/correct_guess"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="0"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/correct"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/correct_guess"
+        app:layout_constraintStart_toEndOf="@+id/correct_guess"
+        app:layout_constraintTop_toTopOf="@+id/correct_guess"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/correct" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/wallet"
+        android:layout_width="280dp"
+        android:layout_height="280dp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4"
+        app:lottie_rawRes="@raw/wallet" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/paper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/correct_guess"
+        app:layout_constraintStart_toEndOf="@+id/correct_guess"
+        app:layout_constraintTop_toTopOf="@+id/correct_guess"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/paper" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

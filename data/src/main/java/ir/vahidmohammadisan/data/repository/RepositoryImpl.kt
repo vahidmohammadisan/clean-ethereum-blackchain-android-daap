@@ -3,7 +3,7 @@ package ir.vahidmohammadisan.data.repository
 import android.util.Log
 import ir.vahidmohammadisan.common.CORRECT_TIME
 import ir.vahidmohammadisan.common.vo.Resource
-import ir.vahidmohammadisan.data.contract.TossCo
+import ir.vahidmohammadisan.data.contract.TOSS
 import ir.vahidmohammadisan.data.local.SharedPreferencesManager
 import ir.vahidmohammadisan.data.local.WalletDao
 import ir.vahidmohammadisan.data.model.WalletEntity
@@ -27,7 +27,7 @@ import javax.inject.Inject
 class RepositoryImpl @Inject constructor(
     private val sharedPreferences: SharedPreferencesManager,
     private val walletDao: WalletDao,
-    private val tossCo: TossCo
+    private val tossCo: TOSS
 ) : Repository {
 
     override fun createWallet(password: String): Flow<Resource<Any>> = flow {
@@ -134,7 +134,7 @@ class RepositoryImpl @Inject constructor(
         try {
 
             launch(Dispatchers.Default) {
-                val balance: BigInteger? = tossCo.getBalance(address).send()
+                val balance: BigInteger? = tossCo.getEthBalance(address).send()
                 withContext(Dispatchers.Main) {
                     send(Resource.Success<String>(data = balance.toString()))
                 }

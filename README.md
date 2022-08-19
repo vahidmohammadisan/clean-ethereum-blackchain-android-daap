@@ -1,4 +1,4 @@
 # TossCo
-An ethereum based decentralized app
+An ethereum based decentralized android app
 
 ![](ff.gif)
